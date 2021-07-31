@@ -58,14 +58,14 @@ app.get('/', (req: Request, res: Response) => {
 	res.sendFile('login.html', { root: viewsDir });
 });
 
-app.get('/users', (req: Request, res: Response) => {
-	const jwt = req.signedCookies[cookieProps.key];
-	if (!jwt) {
-		res.redirect('/');
-	} else {
-		res.sendFile('users.html', { root: viewsDir });
-	}
-});
+// app.get('/users', (req: Request, res: Response) => {
+// 	const jwt = req.signedCookies[cookieProps.key];
+// 	if (!jwt) {
+// 		res.redirect('/');
+// 	} else {
+// 		res.sendFile('users.html', { root: viewsDir });
+// 	}
+// });
 
 /************************************************************************************
  *                              Export Server

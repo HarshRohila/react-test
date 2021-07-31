@@ -12,14 +12,13 @@ interface LoginCreds {
 }
 
 async function creatUser(loginCreds: LoginCreds) {
-	return axios.post(`${API_URL}/user`, loginCreds);
+	return axios.post(`${API_URL}/users`, loginCreds);
 }
 
 export const RegisterForm = ({}: RegisterFormProps) => {
 	const { execute } = useAsync(creatUser, false);
 
 	function handleSubmit(loginCreds: LoginCreds) {
-		debugger;
 		execute(loginCreds);
 	}
 
