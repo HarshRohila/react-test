@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { UserForm } from './UserForm';
 import axios from 'axios';
 import useAsync from '../hooks/useAsync';
+import { API_URL } from '../constants';
 
 type RegisterFormProps = {};
 
@@ -10,12 +11,12 @@ interface LoginCreds {
 	password: string;
 }
 
-async function createToken(loginCreds: LoginCreds) {
-	return axios.post('http://localhost:4000/api/token', loginCreds);
+async function creatUser(loginCreds: LoginCreds) {
+	return axios.post(`${API_URL}/user`, loginCreds);
 }
 
 export const RegisterForm = ({}: RegisterFormProps) => {
-	const { execute } = useAsync(createToken, false);
+	const { execute } = useAsync(creatUser, false);
 
 	function handleSubmit(loginCreds: LoginCreds) {
 		debugger;
