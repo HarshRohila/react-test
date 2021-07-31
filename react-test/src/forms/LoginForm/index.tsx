@@ -2,6 +2,8 @@ import { Field, Form, Formik } from 'formik';
 import React from 'react';
 import { Input } from '../../ui/input';
 import LoginValidation from './validation';
+import axios from 'axios';
+import useAsync from '../../hooks/useAsync';
 
 type LoginFormProps = {};
 
@@ -10,30 +12,46 @@ const initialValue = {
 	password: '',
 };
 
-export const LoginForm = ({}: LoginFormProps) => (
-	<>
-		<Formik
-			initialValues={initialValue}
-			validationSchema={LoginValidation}
-			onSubmit={(values) => {
-				console.log(values);
-			}}
-		>
-			{({ errors, touched }) => (
-				<Form>
-					<Field type="email" name="email" />
+interface LoginCreds {
+	email: string;
+	password: string;
+}
 
-					{errors.email && touched.email ? <div>{errors.email}</div> : null}
+async function createToken(loginCreds: LoginCreds) {
+	return axios.post('/token', loginCreds);
+}
 
-					<Field type="password" name="password" />
+export const LoginForm = ({}: LoginFormProps) => {
+	const { execute, status } = useAsync(createToken, false);
 
-					{errors.password && touched.password ? (
-						<div>{errors.password}</div>
-					) : null}
+	function handleSubmit(loginCreds: LoginCreds) {
+		execute(loginCreds);
+	}
 
-					<button type="submit">Submit</button>
-				</Form>
-			)}
-		</Formik>
-	</>
-);
+	return (
+		<>
+			<Formik
+				initialValues={initialValue}
+				validationSchema={LoginValidation}
+				onSubmit={handleSubmit}
+			>
+				{({ errors, touched }) => (
+					<Form>
+						<Field type="email" name="email" />
+
+						{errors.email && touched.email ? <div>{errors.email}</div> : null}
+
+						<Field type="password" name="password" />
+
+						{errors.password && touched.password ? (
+							<div>{errors.password}</div>
+						) : null}
+
+						<button type="submit">Submit</button>
+						{status === 'pending' && <h1>Loading...</h1>}
+					</Form>
+				)}
+			</Formik>
+		</>
+	);
+};
