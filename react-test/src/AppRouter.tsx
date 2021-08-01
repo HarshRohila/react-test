@@ -7,6 +7,7 @@ import api from './utils/api';
 import { Loader } from './components/Loader';
 import useAsync from './hooks/useAsync';
 import { Payment } from './pages/Payment';
+import { Button } from './ui/Button';
 
 type AppRouterProps = {};
 
@@ -33,9 +34,18 @@ const AuthRouterPage = (
 	const { status } = useAsync(getLoggedInUser);
 	const navigate = useNavigate();
 
+	const { execute, status: logoutStatus } = useAsync(logout, false);
+	const handleLogout = () => {
+		execute().then(() => {
+			navigate('login');
+		});
+	};
 	return (
 		<>
 			{status === 'pending' && <Loader />}
+			{status === 'success' && (
+				<Button onClick={() => handleLogout()}>Logout</Button>
+			)}
 			{status === 'success' && props.pageComponent}
 			{status === 'error' && navigate('/login') && <></>}
 		</>
@@ -44,4 +54,7 @@ const AuthRouterPage = (
 
 async function getLoggedInUser() {
 	return api.get(`/users/me`);
+}
+async function logout() {
+	return api.get(`/auth/logout`);
 }

@@ -10,8 +10,6 @@ import useAsync from './hooks/useAsync';
 import api from './utils/api';
 
 function App() {
-	// const { value } = useAsync(getLoggedInUser);
-
 	return (
 		<div className="App">
 			<Navbar />
@@ -19,9 +17,5 @@ function App() {
 		</div>
 	);
 }
-
-// async function getLoggedInUser() {
-// 	return api.get(`/users/me`);
-// }
 
 export default App;

@@ -9,8 +9,7 @@ export const Payment = ({}: PaymentProps) => {
 
 	return (
 		<>
-			<h1>React TS FC Component</h1>
-			<div>List</div>
+			<h1>Enter Credit Card Details</h1>
 		</>
 	);
 };
