@@ -6,6 +6,7 @@ import { LoginPage } from './pages/LoginPage';
 import api from './utils/api';
 import { Loader } from './components/Loader';
 import useAsync from './hooks/useAsync';
+import { Payment } from './pages/Payment';
 
 type AppRouterProps = {};
 
@@ -14,6 +15,7 @@ export const AppRouter = ({}: AppRouterProps) => {
 		<Router>
 			<RouterPage path="/" pageComponent={<Home />} />
 			<AuthRouterPage path="dashboard" pageComponent={<Dashboard />} />
+			<AuthRouterPage path="payment" pageComponent={<Payment />} />
 			<RouterPage path="login" pageComponent={<LoginPage />} />
 		</Router>
 	);

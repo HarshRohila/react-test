@@ -1,3 +1,4 @@
+import { Link } from '@reach/router';
 import React, { useEffect, useState } from 'react';
 
 type CourseProps = {
@@ -27,6 +28,11 @@ export const Course = ({ course }: CourseProps) => {
 				<div className="card-body">
 					<h5 className="card-title">{course.title}</h5>
 					<p className="card-text">{course.price}</p>
+					<nav>
+						<Link className="btn btn-primary" to="/payment">
+							Buy
+						</Link>
+					</nav>
 				</div>
 			</div>
 		</>
