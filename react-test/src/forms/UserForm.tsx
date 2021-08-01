@@ -3,7 +3,8 @@ import { Field, Form, Formik } from 'formik';
 import LoginValidation from './LoginForm/validation';
 import { Input } from '../ui/input';
 import { Button } from '../ui/Button';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 const initialValue = {
 	email: '',
 	password: '',
@@ -11,9 +12,10 @@ const initialValue = {
 
 type UserFormProps = {
 	onSubmit: (loginCreds: typeof initialValue) => void;
+	isSubmitLoading?: boolean;
 };
 
-export const UserForm = ({ onSubmit }: UserFormProps) => {
+export const UserForm = ({ onSubmit, isSubmitLoading }: UserFormProps) => {
 	return (
 		<div className="card">
 			<div className="card-body">
@@ -40,7 +42,10 @@ export const UserForm = ({ onSubmit }: UserFormProps) => {
 							{errors.password && touched.password ? (
 								<div>{errors.password}</div>
 							) : null}
-							<Button type="submit">Submit</Button>
+							<Button type="submit">
+								Submit
+								{isSubmitLoading && <FontAwesomeIcon icon={faSpinner} spin />}
+							</Button>
 						</Form>
 					)}
 				</Formik>
@@ -48,3 +53,5 @@ export const UserForm = ({ onSubmit }: UserFormProps) => {
 		</div>
 	);
 };
+
+export type LoginCreds = typeof initialValue;

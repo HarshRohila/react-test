@@ -7,6 +7,8 @@ import { Request, Response } from 'express';
 import mongoose from 'mongoose';
 import { userSchema } from 'src/schemas';
 import { badRequest, created, alreadyExists } from 'src/utils/responses';
+import bcrypt from 'bcrypt';
+import { pwdSaltRounds } from '@shared/constants';
 
 async function createToken(req: Request, res: Response) {
 	const User = mongoose.model('User', userSchema);
@@ -36,7 +38,8 @@ async function createUser(req: Request, res: Response) {
 		alreadyExists(res);
 	}
 
-	const newUser = new UserModel({ password, _id: email });
+	const pwdHash = await bcrypt.hash(password, pwdSaltRounds);
+	const newUser = new UserModel({ pwdHash, _id: email });
 	await newUser.save();
 
 	return created(res);
