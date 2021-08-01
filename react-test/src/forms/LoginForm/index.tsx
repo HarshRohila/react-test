@@ -1,20 +1,24 @@
-import { Field, Form, Formik } from 'formik';
 import React from 'react';
-import { Input } from '../../ui/input';
-import LoginValidation from './validation';
-import axios from 'axios';
 import useAsync from '../../hooks/useAsync';
 import { LoginCreds, UserForm } from '../UserForm';
-import { Link } from '@reach/router';
-import { API_URL } from '../../constants';
+import { Link, useNavigate } from '@reach/router';
+import api from '../../utils/api';
 
 type LoginFormProps = {};
 
 export const LoginForm = ({}: LoginFormProps) => {
 	const { execute, status } = useAsync(login, false);
+	const navigate = useNavigate();
 
 	function handleSubmit(loginCreds: LoginCreds) {
-		execute(loginCreds);
+		execute(loginCreds)
+			.then(() => {
+				navigate('dashboard');
+			})
+			.catch((err) => {
+				alert('Login Failed');
+				console.error(err);
+			});
 	}
 
 	return (
@@ -32,5 +36,5 @@ export const LoginForm = ({}: LoginFormProps) => {
 };
 
 async function login(loginCreds: LoginCreds) {
-	return axios.post(`${API_URL}/auth/login`, loginCreds);
+	return api.post(`/auth/login`, loginCreds);
 }

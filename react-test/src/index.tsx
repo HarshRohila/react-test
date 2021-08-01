@@ -5,10 +5,11 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { AppRouter } from './AppRouter';
+import { Navbar } from './components/Navbar';
 
 ReactDOM.render(
 	<React.StrictMode>
-		<AppRouter />
+		<App />
 	</React.StrictMode>,
 	document.getElementById('root')
 );
