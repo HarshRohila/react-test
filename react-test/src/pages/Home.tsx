@@ -17,9 +17,6 @@ export const Home = ({}: HomeProps) => {
 						</nav>
 					</div>
 				</div>
-				<nav>
-					<Link to="dashboard">Dashboard</Link>
-				</nav>
 			</div>
 		</>
 	);

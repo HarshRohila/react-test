@@ -17,7 +17,7 @@ type UserFormProps = {
 
 export const UserForm = ({ onSubmit, isSubmitLoading }: UserFormProps) => {
 	return (
-		<div className="card">
+		<div className="card" style={{ maxWidth: '400px', margin: 'auto' }}>
 			<div className="card-body">
 				<Formik
 					initialValues={initialValue}

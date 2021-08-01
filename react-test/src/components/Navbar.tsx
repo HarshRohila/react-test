@@ -1,12 +1,12 @@
+import { useNavigate } from '@reach/router';
 import React, { useEffect, useState } from 'react';
+import useAsync from '../hooks/useAsync';
+import { Button } from '../ui/Button';
+import api from '../utils/api';
 
 type NavbarProps = {};
 
 export const Navbar = ({}: NavbarProps) => {
-	const [state, setState] = useState();
-
-	useEffect(() => {}, []);
-
 	return (
 		<>
 			<nav className="navbar navbar-expand-lg navbar-light bg-light">
