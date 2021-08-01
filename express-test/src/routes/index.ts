@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { adminMW } from './middleware';
+import { authMW } from './middleware';
 import { login, logout } from './Auth';
 import { getAllUsers, addOneUser, updateOneUser, deleteOneUser } from './Users';
 import { StatusCodes } from 'http-status-codes';
@@ -64,5 +64,19 @@ baseRouter.use('/auth', authRouter);
 
 baseRouter.post('/token', createToken);
 baseRouter.post('/users', createUser);
+baseRouter.get('/users/me', authMW, getLoggedInUser);
+
+async function getLoggedInUser(req: Request, res: Response) {
+	// @ts-ignore
+	const sessionUser = res.sessionUser;
+	console.log(sessionUser);
+	const UserModel = mongoose.model('User', userSchema);
+	const user = await UserModel.findById(sessionUser.id).exec();
+	if (user) {
+		res.status(StatusCodes.OK).json({ email: user._id });
+	}
+
+	res.status(StatusCodes.UNAUTHORIZED).end();
+}
 
 export default baseRouter;
